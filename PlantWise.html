@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Web-based Indoor and Outdoor Plant Selection and Information Portal</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%235a3d9a'/%3E%3Cpath d='M32 34C32 24 24 18 14 18c0 10 7 17 18 16z' fill='white'/%3E%3Cpath d='M32 29c0-9 7-15 18-15 0 10-7 16-18 15z' fill='%23d9c9ff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Figtree:wght@400;600&display=swap" media="print" onload="this.media='all'">
+<style>
+:root{--bg:#f6f2fc;--card:#fff;--ink:#2a2238;--mute:#6b6280;--fg:#5a3d9a;--sage:#cbbdea;--soft:#ece6f8;--line:#dcd2ee;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17131f;--card:#211b2d;--ink:#ece7f6;--mute:#a89fbd;--fg:#b9a1f0;--sage:#4a3b6e;--soft:#2b2340;--line:#3a3055;--on:#17131f}}
+:root[data-theme="dark"]{--bg:#17131f;--card:#211b2d;--ink:#ece7f6;--mute:#a89fbd;--fg:#b9a1f0;--sage:#4a3b6e;--soft:#2b2340;--line:#3a3055;--on:#17131f}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0 0 .5em}
+a{color:var(--fg)}.w{max-width:1080px;margin:0 auto;padding:0 18px}
+.shell{display:flex;min-height:100vh}.right{flex:1;min-width:0}.top{display:flex;justify-content:flex-end;padding:12px 18px}
+nav{width:235px;flex:none;position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;background:var(--card);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px;z-index:5}
+@media(max-width:780px){.shell{display:block}nav{width:auto;height:auto;position:static;flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--line)}nav .logo{width:100%}}
+
+nav a{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink);font-size:.98rem;font-weight:600;padding:11px 12px;border-radius:12px;border:1px solid var(--line)}nav a:hover{background:var(--soft)}
+nav a.on{background:var(--fg);color:var(--on);border-color:var(--fg)}nav .logo{font:700 1rem/1.25 Fraunces,serif;color:var(--fg);margin-bottom:10px;border:0;padding:4px 0}nav .logo:hover{background:none}
+.hero{padding:56px 0 24px}.hero h1{font-size:clamp(2.2rem,6vw,3.8rem);max-width:12em}.hero p{max-width:36em;color:var(--mute);font-size:1.1rem}
+.g{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.c{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 2px 10px rgba(20,50,30,.07)}
+.big{background:var(--fg);color:var(--on);border:0}.big p{opacity:.9}.big .b{background:var(--on);color:var(--fg)}
+.pic{height:110px;border-radius:12px;background:linear-gradient(135deg,var(--soft),var(--sage));display:grid;place-items:center;font-size:3.4rem;margin-bottom:10px}
+.b{display:inline-block;background:var(--fg);color:var(--on);border:0;border-radius:99px;padding:8px 18px;font:600 .95rem Figtree,sans-serif;cursor:pointer;text-decoration:none}
+.b.o{background:transparent;color:var(--fg);border:1.5px solid var(--fg)}.b:hover{opacity:.88}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+input,select{font:inherit;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);max-width:100%}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.bar input{flex:1;min-width:200px}
+.tag{display:inline-block;background:var(--soft);border-radius:99px;padding:2px 10px;font-size:.8rem;margin:0 4px 4px 0}
+.sec{padding:30px 0}.mute{color:var(--mute)}.s{font-size:.88rem;color:var(--mute);margin:2px 0}
+.ov{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:520px}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{width:150px;color:var(--mute);font-weight:600}
+.drop{border:2px dashed var(--sage);border-radius:18px;padding:26px;text-align:center}.drop.h{background:var(--soft)}.drop img{max-width:220px;border-radius:12px}
+.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:.92rem}
+footer{padding:30px 0;color:var(--mute);font-size:.88rem}#splash{position:fixed;inset:0;z-index:99;background:var(--bg);display:grid;place-items:center;text-align:center;padding:24px;transition:opacity .6s;cursor:pointer}#splash.h{opacity:0;pointer-events:none}#top{padding-top:16px}
+</style></head><body><div id="splash"></div>
+<div class="shell"><nav><a class="logo" href="#/" aria-label="Home"><span id="nl"></span></a>
+<a href="#/explore"><span aria-hidden="true">🌿</span> Explore Plants</a><a href="#/search"><span aria-hidden="true">🔎</span> Search Plants</a><a href="#/quiz"><span aria-hidden="true">🧭</span> Find My Plant</a><a href="#/compare"><span aria-hidden="true">⚖️</span> Plant Comparison</a><a href="#/about"><span aria-hidden="true">ℹ️</span> About Us</a></nav><div class="right"><div class="top"><label>🌐 <select id="lang" aria-label="Language"><option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option></select></label></div>
+<div class="w" id="top"></div><main class="w" id="app" tabindex="-1"></main>
+<footer class="w">Plant records are illustrative samples with typical values, not guarantees. Source: general horticultural references, sample data updated Oct 2026. Photos and web results load live from Wikipedia, Wikimedia Commons and iNaturalist (licences vary) and need an internet connection.</footer></div></div>
+<script>
+const LOGOIMG="logo.png";
+const P=[
+{i:1,n:"Snake plant",s:"Dracaena trifasciata",e:"🪴",env:"in",cat:"Succulent",h:"40–120 cm",sp:"20–40 cm",cl:"Tropical, subtropical",se:"Grows spring–summer; rarely flowers",su:"Low to bright indirect",w:"Every 2–3 weeks",so:"Gritty, well-drained",hu:"Tolerates dry air",t:"15–30 °C",m:"Easy",g:"Slow",pet:"Mildly toxic to cats and dogs",rm:["Bedroom","Hall / Living Room","Study Room"],use:"Tolerates low light; popularly kept as a bedroom plant",pr:"Leaf cuttings, division",pe:"Mealybugs; root rot if overwatered",mk:"12–18 months",dm:"Steady year-round (indicator only)",cu:"Households, offices",gd:3,nat:"West Africa",ls:"10+ years"},
+{i:2,n:"Money plant",s:"Epipremnum aureum",e:"🌱",env:"in",cat:"Climber",h:"1–2 m trailing",sp:"Trailing",cl:"Tropical, subtropical",se:"Grows spring–summer",su:"Medium to bright indirect",w:"When top 3 cm of soil is dry",so:"Light, well-drained potting mix",hu:"Average, 40–60%",t:"15–30 °C",m:"Easy",g:"Fast",pet:"Toxic to cats and dogs",rm:["Hall / Living Room","Study Room","Balcony (shaded)"],use:"Trails from shelves; easy to root in water",pr:"Stem cuttings in water or soil",pe:"Mealybugs, spider mites",mk:"2–4 months",dm:"Steady, high household interest (indicator only)",cu:"Households, offices, gift buyers",gd:6,nat:"Solomon Islands",ls:"Many years"},
+{i:3,n:"Peace lily",s:"Spathiphyllum wallisii",e:"🤍",env:"in",cat:"Flowering",h:"40–70 cm",sp:"40–60 cm",cl:"Tropical",se:"Flowers mostly spring–summer",su:"Low to medium indirect",w:"Weekly; keep evenly moist",so:"Rich, moisture-retentive, drained",hu:"High, above 50%",t:"18–28 °C",m:"Moderate",g:"Moderate",pet:"Toxic to cats and dogs",rm:["Bedroom","Hall / Living Room"],use:"White blooms; droops visibly when thirsty",pr:"Division",pe:"Spider mites, leaf-tip browning",mk:"6–10 months",dm:"Seasonal peaks around gifting (indicator only)",cu:"Households, offices",gd:4,nat:"Colombia, Venezuela",ls:"5–10 years"},
+{i:4,n:"Areca palm",s:"Dypsis lutescens",e:"🌴",env:"in",cat:"Palm",h:"1.5–2.5 m indoors",sp:"1–1.5 m",cl:"Tropical",se:"Grows spring–summer",su:"Bright indirect; tolerates some sun",w:"Weekly; keep lightly moist",so:"Well-drained, slightly acidic",hu:"Medium to high",t:"18–30 °C",m:"Moderate",g:"Moderate",pet:"Generally considered non-toxic to pets",rm:["Hall / Living Room","Balcony (sunny)"],use:"Fills tall corners; needs space and airflow",pr:"Division, seed",pe:"Spider mites, scale",mk:"12–24 months",dm:"Steady (indicator only)",cu:"Households, offices, landscapers",gd:2,nat:"Madagascar",ls:"10+ years"},
+{i:5,n:"Aloe vera",s:"Aloe vera",e:"🌵",env:"both",cat:"Succulent",h:"30–60 cm",sp:"30–50 cm",cl:"Warm, semi-arid",se:"Flowers in warm months",su:"Full sun to bright light",w:"Every 2–3 weeks",so:"Sandy, fast-draining",hu:"Low",t:"15–35 °C",m:"Easy",g:"Moderate",pet:"Toxic to cats and dogs if eaten",rm:["Balcony (sunny)","Study Room"],use:"Traditionally used for skin care",pr:"Offsets (pups)",pe:"Mealybugs, rot from overwatering",mk:"4–8 months",dm:"Steady (indicator only)",cu:"Households, herbal buyers",gd:5,nat:"Arabian Peninsula",ls:"10+ years"},
+{i:6,n:"Hibiscus",s:"Hibiscus rosa-sinensis",e:"🌺",env:"out",cat:"Flowering",h:"1.5–3 m",sp:"1–2 m",cl:"Tropical, warm",se:"Flowers most of the year in warm climates",su:"Full sun",w:"Every 2–3 days in heat",so:"Rich, well-drained loam",hu:"Medium",t:"18–35 °C",m:"Moderate",g:"Fast",pet:"Generally considered non-toxic",rm:[],use:"Ornamental blooms; used in worship and hair care traditions",pr:"Stem cuttings, grafting",pe:"Aphids, whitefly, mealybugs",mk:"6–9 months",dm:"Higher in festival seasons (indicator only)",cu:"Households, gardeners, landscapers",gd:9,nat:"East Asia",ls:"10–20 years"},
+{i:7,n:"Holy basil (Tulsi)",s:"Ocimum tenuiflorum",e:"🌿",env:"out",cat:"Herb",h:"30–60 cm",sp:"30–45 cm",cl:"Tropical, subtropical",se:"Sow in spring; grows in warm months",su:"Full sun",w:"Every 1–2 days when warm",so:"Loamy, well-drained",hu:"Medium",t:"20–35 °C",m:"Easy",g:"Fast",pet:"Data not available",rm:["Balcony (sunny)"],use:"Traditional medicinal and religious plant; used in teas",pr:"Seed, cuttings",pe:"Aphids, leaf spot",mk:"1–3 months",dm:"Consistent (indicator only)",cu:"Households, herbal buyers",gd:5,nat:"Indian subcontinent",ls:"1–2 years"},
+{i:8,n:"Mango (grafted sapling)",s:"Mangifera indica",e:"🥭",env:"out",cat:"Fruit tree",h:"8–15 m",sp:"8–12 m",cl:"Tropical, warm",se:"Flowers winter–spring; fruit in summer",su:"Full sun",w:"Regular when young; deep, infrequent after",so:"Deep, well-drained loam",hu:"Medium",t:"24–35 °C",m:"Moderate",g:"Moderate",pet:"Fruit safe; sap can irritate skin",rm:[],use:"Fruit; shade; widely sold as a grafted sapling",pr:"Grafting",pe:"Anthracnose, mango hopper",mk:"12–24 months",dm:"Peaks before monsoon planting (indicator only)",cu:"Households, farmers, landscapers",gd:7,nat:"South Asia",ls:"50+ years"},
+{i:9,n:"Jasmine",s:"Jasminum sambac",e:"🌼",env:"out",cat:"Climber",h:"1–3 m",sp:"1–2 m",cl:"Tropical, subtropical",se:"Flowers in warm months",su:"Full sun",w:"Every 2–3 days",so:"Sandy loam, well-drained",hu:"Medium",t:"20–35 °C",m:"Moderate",g:"Moderate",pet:"Generally considered non-toxic",rm:["Balcony (sunny)"],use:"Fragrant flowers for garlands and perfume",pr:"Layering, cuttings",pe:"Bud worm, leaf blight",mk:"6–10 months",dm:"Higher in wedding and festival seasons (indicator only)",cu:"Households, florists",gd:9,nat:"South Asia",ls:"10+ years"},
+{i:10,n:"Bougainvillea",s:"Bougainvillea glabra",e:"🌸",env:"out",cat:"Shrub",h:"3–6 m climbing",sp:"2–4 m",cl:"Warm, dry-tolerant",se:"Bracts in dry, sunny months",su:"Full sun",w:"Low once established",so:"Sandy, well-drained",hu:"Low",t:"18–38 °C",m:"Easy",g:"Fast",pet:"Thorny; mild irritant",rm:[],use:"Colourful bracts; fences and walls",pr:"Stem cuttings",pe:"Caterpillars, aphids",mk:"6–9 months",dm:"Steady (indicator only)",cu:"Households, landscapers",gd:9,nat:"South America",ls:"20+ years"},
+{i:11,n:"Spider plant",s:"Chlorophytum comosum",e:"🍃",env:"in",cat:"Foliage",h:"20–40 cm",sp:"30–60 cm",cl:"Tropical, subtropical, temperate indoors",se:"Grows spring–summer",su:"Medium to bright indirect",w:"Weekly",so:"Light, well-drained",hu:"Average",t:"13–27 °C",m:"Easy",g:"Fast",pet:"Considered non-toxic to cats and dogs",rm:["Study Room","Balcony (shaded)","Hall / Living Room"],use:"Hanging baskets; produces plantlets",pr:"Plantlets, division",pe:"Brown tips from fluoride or dry air",mk:"2–4 months",dm:"Steady (indicator only)",cu:"Households, offices",gd:6,nat:"Southern Africa",ls:"5–10 years"},
+{i:12,n:"Moringa",s:"Moringa oleifera",e:"🌳",env:"out",cat:"Tree, medicinal",h:"5–10 m",sp:"3–5 m",cl:"Tropical, semi-arid",se:"Flowers 1–2 times a year",su:"Full sun",w:"Low once established",so:"Sandy loam, well-drained",hu:"Low to medium",t:"25–38 °C",m:"Easy",g:"Very fast",pet:"Data not available",rm:[],use:"Edible leaves and pods; traditional medicine",pr:"Seed, hardwood cuttings",pe:"Hairy caterpillars, stem borers",mk:"3–6 months",dm:"Rising interest (indicator only)",cu:"Farmers, households, herbal buyers",gd:5,nat:"Indian subcontinent",ls:"15–20 years"}];
+const ROOMS=["Bedroom","Hall / Living Room","Balcony","Study Room"];
+const GD=[
+["Soil preparation and potting mixtures","Potting mix, perlite, compost, coco peat",["Mix 2 parts potting soil, 1 part coco peat and 1 part perlite or coarse sand.","Add a handful of compost for nutrients.","Test drainage: water should exit the pot within a minute."],"Using garden soil alone in pots; it compacts."],
+["Choosing pots and growing spaces","Pots with drainage holes, saucers",["Pick a pot 3–5 cm wider than the root ball.","Make sure it has drainage holes.","Match the space to the plant's mature size."],"Pots with no drainage."],
+["Seed planting and transplanting","Seed tray, mix, spray bottle",["Sow seeds at about twice their width in depth.","Keep the mix evenly moist, not soaked.","Move seedlings when they have 2–3 true leaves; handle by leaves."],"Sowing too deep or transplanting in midday sun."],
+["Watering techniques","Watering can, finger",["Push a finger 3 cm into the soil.","Water slowly until it drains from the bottom.","Empty the saucer after 15 minutes."],"Small sips every day; it encourages shallow roots and rot."],
+["Sunlight and temperature","Notebook, window",["Note how many hours of direct sun your spot gets.","Match it to the plant's light need.","Keep plants away from AC vents and hot glass."],"Moving a shade plant to full sun in one day."],
+["Fertilizers and compost","Compost, balanced fertilizer",["Feed during active growth only.","Use half the label strength on young plants.","Top-dress with compost each season."],"Fertilizing dry or stressed plants."],
+["Plant propagation","Clean knife, rooting jar",["Cut a healthy stem below a node.","Root in water or moist mix.","Pot up when roots are 3–5 cm long."],"Using dull tools that crush stems."],
+["Growth stages and pruning","Clean pruners",["Prune just above a leaf node.","Remove dead, crossing and diseased stems.","Prune flowering shrubs after they bloom."],"Heavy pruning right before flowering."],
+["Pest and disease prevention","Neem oil, soap spray",["Inspect leaf undersides weekly.","Isolate affected plants.","Treat early with neem or soapy water."],"Overcrowding that traps humid air."],
+["Seasonal gardening and common mistakes","Calendar",["Plant most tropical species at the start of warm, wet months.","Shade seedlings through peak heat.","Learn each plant's rest period."],"Overwatering, which kills more plants than neglect."]];
+const $=s=>document.querySelector(s),app=$('#app');
+let fav,cmp;try{fav=new Set(JSON.parse(localStorage.getItem('pw-fav')||'[]'))}catch(e){fav=new Set()}cmp=new Set();
+const sv=()=>{try{localStorage.setItem('pw-fav',JSON.stringify([...fav]))}catch(e){}};
+const card=p=>`<div class="c"><div class="pic" role="img" aria-label="${p.n} illustration">${p.e}</div><h3>${p.n}</h3><p class="s"><i>${p.s}</i></p><p class="s">${p.h} · ${p.su}</p><p class="s">${p.cl} · ${p.se}</p><p>${p.use}</p>${acts(p)}</div>`;
+function tc(i){cmp.has(i)?cmp.delete(i):cmp.add(i);route()}
+function tf(i){fav.has(i)?fav.delete(i):fav.add(i);sv();route()}
+const opts=(a)=>a.map(x=>`<option>${x}</option>`).join('');
+const none=`<div class="c">No plants match these filters. Clear a filter or try another name.</div>`;
+function home(){return`<section class="hero" style="text-align:center;padding-top:80px"><h1 style="font-size:clamp(1.8rem,4.5vw,3rem);max-width:18em;margin:0 auto 14px">Welcome to Web-based Indoor and Outdoor Plant Selection and Information Portal</h1><h2 style="color:var(--fg)">Discover Plants. Grow Opportunities.</h2></section>`}
+const OUTC=["All","Ayurvedic","Flowering","Fruit","Vegetable","Medicinal","Tree","Shrub","Climber","Herb","Succulent","Low-maintenance"];
+function outMatch(p,c){if(c=="All")return 1;if(c=="Low-maintenance")return p.m=="Easy";return(p.cat+(p.use||'')).toLowerCase().includes(c.toLowerCase())}
+function explore(sub){
+if(!sub)return`<section class="sec"><h1>Explore Plants</h1><div class="g g2"><div class="c"><h2>Outdoor Plants</h2><p>Gardens, yards and outdoor pots.</p><a class="b" href="#/explore/outdoor">Outdoor plants</a></div><div class="c"><h2>Indoor Plants</h2><p>Bedroom, living room, balcony or study.</p><a class="b" href="#/explore/indoor">Indoor plants</a></div></div></section>`;
+if(sub=='outdoor'){const c=window.oc||'All',q=(window.oq||'').toLowerCase();const r=P.filter(p=>p.env!='in'&&outMatch(p,c)&&(p.n+p.s+(p.l||'')).toLowerCase().includes(q));
+return`<section class="sec"><h1>Outdoor Plants</h1><div class="bar"><input aria-label="Search outdoor plants" placeholder="Search outdoor plants" value="${window.oq||''}" oninput="window.oq=this.value;rr(this)"><select aria-label="Subcategory" onchange="window.oc=this.value;route()">${OUTC.map(x=>`<option ${x==c?'selected':''}>${x}</option>`).join('')}</select></div><div class="g">${r.map(card).join('')||none}</div></section>`}
+const rm=window.rm||'Bedroom',bal=rm=='Balcony';const r=P.filter(p=>p.env!='out'&&p.rm.some(x=>bal?x.startsWith('Balcony'):x==rm));
+return`<section class="sec"><h1>Indoor Plants</h1><div class="bar">${ROOMS.map(x=>`<button class="b ${x==rm?'':'o'}" onclick="window.rm='${x}';route()">${x}</button>`).join('')}</div>${bal?'<p class="note">Balconies differ: plants below are tagged sunny or shaded. Match them to your hours of direct sun.</p>':''}<div class="g">${r.map(p=>`<div class="c"><div class="pic">${p.e}</div><h3>${p.n}</h3><p class="s"><i>${p.s}</i></p><p class="s">Placement: ${p.rm.filter(x=>bal?x.startsWith('Balcony'):x==rm).join(', ')}</p><p class="s">Height ${p.h}, spread ${p.sp}</p><p class="s">Light: ${p.su}</p><p class="s">Water: ${p.w}</p><p class="s">Humidity: ${p.hu}; ${p.t}</p><p class="s">Maintenance: ${p.m}</p><p class="s">Pets: ${p.pet}</p><p>${p.use}</p><a class="b" href="#/plant/${p.i}">View Details</a></div>`).join('')||none}</div></section>`}
+let _t;function rr(el){clearTimeout(_t);_t=setTimeout(()=>{const pos=el.selectionStart;route();const n=document.querySelector('input[aria-label="'+el.getAttribute('aria-label')+'"]');if(n){n.focus();n.setSelectionRange(pos,pos)}},250)}
+const F={q:'',env:'Any',cat:'Any',sun:'Any',m:'Any'};
+function search(arg){if(arg!=null&&arg!==window._sa){F.q=decodeURIComponent(arg);window._sa=arg}
+const q=F.q.trim(),r=q?P.filter(p=>(p.n+p.s+(p.l||'')).toLowerCase().includes(q.toLowerCase())):[],gq=encodeURIComponent(q+' plant');
+return`<section class="sec"><h1>Search Plants</h1><div class="g g2"><div class="c"><h2>By name</h2><input aria-label="Search by name" style="width:100%" placeholder="Plant name in English, Telugu or Hindi" value="${esc(F.q)}" oninput="F.q=this.value;rr(this)"></div>
+<div class="c"><h2>By photo</h2><div class="drop" id="dz" ondragover="event.preventDefault();this.classList.add('h')" ondragleave="this.classList.remove('h')" ondrop="event.preventDefault();this.classList.remove('h');pick(event.dataTransfer.files[0])"><p>Drag a plant photo here or</p><input type="file" id="fi" accept="image/*" aria-label="Choose plant photo" onchange="pick(this.files[0])"><div id="pv"></div></div><p><button class="b" onclick="idf()">Identify Plant</button></p><div id="res" role="status"></div></div></div>${q?`<h2 style="margin-top:24px">${r.length} result${r.length==1?'':'s'} in our list</h2><div class="g">${r.map(card).join('')||`<div class="c">No plant named “${esc(q)}” in our list. See the online results below.</div>`}</div><div class="c" style="margin-top:16px"><h2>Google search results</h2><p>Open Google results for “${esc(q)}”.</p><a class="b" href="https://www.google.com/search?q=${gq}" target="_blank" rel="noopener">Google results</a> <a class="b o" href="https://www.google.com/search?tbm=isch&q=${gq}" target="_blank" rel="noopener">Google Images</a></div>`:''}</section>`}
+let file;function pick(f){const pv=$('#pv'),res=$('#res');res.innerHTML='';file=null;if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){pv.innerHTML='';res.innerHTML='<p class="note">Use a JPG, PNG or WebP image.</p>';return}if(f.size>8e6){res.innerHTML='<p class="note">That file is over 8 MB. Choose a smaller photo.</p>';return}file=f;const u=URL.createObjectURL(f);pv.innerHTML=`<img src="${u}" alt="Your plant photo preview">`}
+function idf(){const res=$('#res');if(!file){res.innerHTML='<p class="note">Add a photo first.</p>';return}res.innerHTML='<p class="note"><b>Identification is not available.</b> No plant-identification service is configured for this site, so no name is suggested. Search by name instead, or ask the site owner to connect a service.</p>'}
+function detail(id){const p=P.find(x=>x.i==id);if(!p)return`<section class="sec"><h1>Plant not found</h1><a href="#/search">Back to search</a></section>`;
+const rows=[["Scientific name",p.s],["Telugu / Hindi name",(p.te||'Data not available')+' / '+(p.hi||'Data not available')],["Category",p.cat],["Setting",{in:'Indoor',out:'Outdoor',both:'Indoor and outdoor'}[p.env]],["Native region",p.nat],["Typical height / spread",p.h+' / '+p.sp],["Growth rate",p.g],["Typical lifespan",p.ls],["Climate",p.cl],["Temperature",p.t],["Seasons",p.se],["Sunlight",p.su],["Soil and drainage",p.so],["Watering",p.w],["Humidity",p.hu],["Fertilizer","Balanced feed every 4–6 weeks in active growth"],["Propagation",p.pr],["Maintenance",p.m],["Significance",p.use],["Pests and diseases",p.pe],["Pet safety",p.pet],["Suitable locations",p.rm.length?p.rm.join(', '):'Garden, yard, large pots']];
+return`<section class="sec"><a href="javascript:history.back()">← Back</a><div class="g g2" style="margin-top:12px"><div><div class="pic" style="height:220px;font-size:7rem" role="img" aria-label="${p.n}">${p.e}</div><p class="s">Photo gallery: Data not available (illustration shown).</p></div><div><h1>${p.n}</h1><p class="mute"><i>${p.s}</i></p><p>${p.use}.</p><div class="note"><b>Cost:</b> Price data not available here. Prices change with plant size, seller and city. Check today's price on <a href="${fk(p)}" target="_blank" rel="noopener">Flipkart</a> or <a href="${gg(p)}" target="_blank" rel="noopener">Google</a>.</div><p><button class="b" onclick="tf(${p.i})">${fav.has(p.i)?'★ Saved':'☆ Save to Favorites'}</button> <a class="b o" href="#/guides/${p.gd}">Growing guide</a> <a class="b" href="${fk(p)}" target="_blank" rel="noopener">Buy Now</a></p></div></div>
+<div class="ov c" style="margin-top:20px"><table>${rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</table></div><p class="s">Values are typical, not guarantees. Sample data, Oct 2026.</p>
+<h2 style="margin-top:24px">Related plants</h2><div class="g">${P.filter(x=>x.i!=p.i&&(x.cat==p.cat||x.env==p.env)).slice(0,3).map(card).join('')}</div></section>`}
+const N={cat:'Any',m:'Any',mk:'Any',cu:'Any'};
+function months(p){return parseInt(p.mk)}
+function nursery(){const r=P.filter(p=>(N.cat=='Any'||p.cat.includes(N.cat))&&(N.m=='Any'||p.m==N.m)&&(N.cu=='Any'||p.cu.includes(N.cu))&&(N.mk=='Any'||(N.mk=='Under 6 months'?months(p)<6:months(p)>=6)));
+const sel=(k,a)=>`<select aria-label="${k}" onchange="N['${k}']=this.value;route()">${['Any',...a].map(x=>`<option ${N[k]==x?'selected':''}>${x}</option>`).join('')}</select>`;
+const mk=p=>`<div class="c"><div class="pic">${p.e}</div><h3>${p.n}</h3><p class="s">Demand: ${p.dm}</p><p class="s">Customers: ${p.cu}</p><p class="s">Time to market: ${p.mk}</p><p class="s">Propagation: ${p.pr}</p><p class="s">Retail / wholesale price: Data not available</p><p class="s">Cultivation cost: Data not available</p><p class="s">Climate: ${p.cl}</p><p class="s">Risks: mortality, unsold stock, price swings, seasonal demand</p><a class="b" href="#/plant/${p.i}">Plant details</a> <button class="b o" onclick="tc(${p.i})">${cmp.has(p.i)?'Remove':'Compare'}</button></div>`;
+return`<section class="sec"><h1>Nursery Investment Guide</h1><p class="note">This is research support, not financial advice. No plant is guaranteed to be profitable. Price and cost data are shown only when a sourced local figure exists; otherwise it says "Data not available". Use the Nursery Calculator in the menu to test your own estimates.</p>
+<div class="g"><div class="c"><h3>Categories nurseries sell</h3><p>Ornamental, flowering, fruit saplings, indoor plants, trees, shrubs and seasonal plants.</p></div><div class="c"><h3>Customer groups</h3><p>Households, landscapers, offices, gardeners and farmers.</p></div></div>
+<div class="bar" style="margin-top:20px"><label>Category ${sel('cat',['Flowering','Fruit','Succulent','Climber','Herb','Shrub','Tree','Palm','Foliage'])}</label><label>Maintenance ${sel('m',['Easy','Moderate'])}</label><label>Growing period ${sel('mk',['Under 6 months','6 months or more'])}</label><label>Customer ${sel('cu',['Households','Landscapers','Offices','Farmers','Florists'])}</label></div>
+<p class="s">Filters for local climate, starting cost and seasonal demand need a sourced local dataset; none is connected yet.</p>
+<h2>${r.length} varieties</h2><div class="g">${r.map(mk).join('')||none}</div>
+<h2 style="margin-top:24px">Compare opportunities</h2>${cmpTable(true)}</section>`}
+function cmpTable(biz){const a=ALLP().filter(p=>cmp.has(p.i));if(a.length<2)return`<div class="c">Select at least two plants with the Compare button. ${a.length} selected.</div>`;
+const R=biz?[["Growing requirements",p=>p.su+'; '+p.w],["Time to market",p=>p.mk],["Growing cost",p=>'Data not available'],["Selling price",p=>'Data not available'],["Seasonal demand",p=>p.dm],["Maintenance",p=>p.m],["Market risks",p=>p.m=='Easy'?'Lower care risk; unsold stock and price swings still apply':'Care-sensitive: mortality risk plus price swings']]
+:[["Height / spread",p=>p.h+' / '+p.sp],["Setting",p=>({in:'Indoor',out:'Outdoor',both:'Both'})[p.env]||'Data not available'],["Climate",p=>p.cl],["Sunlight",p=>p.su],["Watering",p=>p.w],["Soil",p=>p.so],["Growing season",p=>p.se],["Growth rate",p=>p.g],["Maintenance",p=>p.m],["Pet safety",p=>p.pet],["Time to market",p=>p.mk],["Nursery market info",p=>p.dm+'; price Data not available']];
+return`<div class="ov c"><table><tr><th></th>${a.map(p=>`<td><b>${p.e} ${p.n}</b><br><button class="b o" onclick="tc('${p.i}')">Remove</button></td>`).join('')}</tr>${R.map(r=>`<tr><th>${r[0]}</th>${a.map(p=>`<td>${r[1](p)}</td>`).join('')}</tr>`).join('')}</table></div>`}
+function guides(i){if(i==null)return`<section class="sec"><h1>Growing Guides</h1><div class="g">${GD.map((g,k)=>`<div class="c"><h3>${g[0]}</h3><p>${g[2][0]}</p><a href="#/guides/${k}">Read guide</a></div>`).join('')}</div></section>`;
+const g=GD[i];if(!g)return guides();const rel=P.filter(p=>p.gd==i);return`<section class="sec" style="max-width:660px"><a href="#/guides">← All guides</a><h1>${g[0]}</h1><div class="pic" role="img" aria-label="Illustration">🪴</div><h3>Materials</h3><p>${g[1]}</p><h3>Steps</h3><ol>${g[2].map(s=>`<li>${s}</li>`).join('')}</ol><h3>Mistake to avoid</h3><p>${g[3]}</p>${rel.length?`<h3>Related plants</h3><p>${rel.map(p=>`<a href="#/plant/${p.i}">${p.n}</a>`).join(', ')}</p>`:''}</section>`}
+const about=()=>`<section class="sec" style="max-width:660px"><h1>About Us</h1><p>The Web-based Indoor and Outdoor Plant Selection and Information Portal makes plant information accessible and helps people make informed decisions about growing plants and choosing what to stock in a nursery.</p><h3>What you can do</h3><p>Search plants, explore indoor and outdoor varieties room by room, compare plants side by side, learn to grow them, and research nursery varieties with honest labels for missing data.</p><h3>Who it is for</h3><p>Home gardeners and plant lovers, and nursery owners or aspiring entrepreneurs.</p></section>`;
+function route(){const h=(location.hash||'#/').slice(2).split('/'),[a,b]=h;let v;
+if(!a)v=home();else if(a=='explore')v=explore(b);else if(a=='search')v=search(b);else if(a=='plant')v=detail(b);else if(a=='nursery')v=nursery();else if(a=='compare')v=`<section class="sec"><h1>Plant Comparison</h1>${cmpTable(false)}<p style="margin-top:14px"><a class="b o" href="#/search">Add plants</a></p></section>`;else if(a=='guides')v=guides(b==null?null:+b);else if(a=='about')v=about();else v=home();
+const y=scrollY;app.innerHTML=v;document.querySelectorAll('nav a').forEach(n=>n.classList.toggle('on',n.getAttribute('href')=='#/'+(a||'')));if(app.dataset.k!=location.hash){scrollTo(0,0);app.dataset.k=location.hash}else scrollTo(0,y)}
+const D={sp:"Data not available",cl:"Tropical, subtropical",se:"Grows best in warm months",so:"Well-drained soil",hu:"Data not available",t:"Data not available",g:"Data not available",nat:"Data not available",ls:"Data not available",pr:"Data not available",pe:"Data not available",mk:"Data not available",dm:"Data not available",cu:"Households",gd:3};
+const RN={B:"Bedroom",H:"Hall / Living Room",S:"Study Room",U:"Balcony (sunny)",D:"Balcony (shaded)"},LT={L:"Low to medium indirect",M:"Medium indirect",B:"Bright indirect",S:"Full sun"},WT={A:"Every 1–2 weeks",B:"Weekly",C:"Keep evenly moist",D:"Every 2–3 weeks",E:"Every 1–2 days in warm weather",F:"Low once established"},MT={E:"Easy",M:"Moderate",H:"Demanding"},PT={S:"Generally considered non-toxic to pets",T:"Toxic to cats and dogs",M:"Mild irritant if chewed",U:"Data not available"};
+const X=`ZZ plant|Zamioculcas zamiifolia|🪴|Foliage|BHSD|L|D|E|T|45–90 cm|Thrives on neglect; stores water in rhizomes
+Boston fern|Nephrolepis exaltata|🌿|Fern|BHD|M|C|M|S|40–90 cm|Soft arching fronds; likes humidity
+Rubber plant|Ficus elastica|🌿|Foliage|BHS|B|B|E|M|1–3 m|Glossy leaves; sap can irritate
+Chinese evergreen|Aglaonema commutatum|🌿|Foliage|BHSD|L|B|E|T|40–90 cm|Tolerates low light
+Parlor palm|Chamaedorea elegans|🌴|Palm|BHSD|L|B|E|S|0.6–1.5 m|Compact, slow-growing palm
+Cast iron plant|Aspidistra elatior|🌿|Foliage|BHD|L|B|E|S|50–90 cm|Very tough in shade
+Heartleaf philodendron|Philodendron hederaceum|🌿|Climber|BSHD|M|B|E|T|1–2 m trailing|Easy trailing vine
+Bamboo palm|Chamaedorea seifrizii|🌴|Palm|HBD|M|C|M|S|1–2 m|Clumping palm for corners
+Calathea|Goeppertia makoyana|🌿|Foliage|BSH|M|C|H|S|40–60 cm|Patterned leaves; needs humidity
+Prayer plant|Maranta leuconeura|🌿|Foliage|BS|M|C|M|S|20–30 cm|Leaves fold up at night
+Orchid|Phalaenopsis spp.|🌸|Flowering|BHS|B|B|M|S|30–60 cm|Long-lasting blooms
+Anthurium|Anthurium andraeanum|❤️|Flowering|HBSD|B|B|M|T|30–60 cm|Glossy red or pink spathes
+Jade plant|Crassula ovata|🪴|Succulent|SUH|B|D|E|T|0.5–1 m|Long-lived succulent
+African violet|Streptocarpus ionanthus|💜|Flowering|BS|B|C|M|S|10–20 cm|Compact flowers; water at the base
+Lucky bamboo|Dracaena sanderiana|🎋|Foliage|BSH|M|C|E|T|30–100 cm|Grows in water or soil
+Dieffenbachia|Dieffenbachia seguine|🌿|Foliage|HBD|M|B|E|T|0.6–1.5 m|Bold variegated leaves; sap irritates
+Monstera|Monstera deliciosa|🌿|Foliage|HBSD|B|B|E|T|1–3 m|Split leaves; give it a support
+Fiddle-leaf fig|Ficus lyrata|🌿|Foliage|H|B|B|H|T|1.5–3 m|Statement plant; dislikes being moved
+Ponytail palm|Beaucarnea recurvata|🪴|Succulent|HU|B|D|E|S|0.6–1.5 m|Swollen trunk stores water
+Haworthia|Haworthiopsis attenuata|🪴|Succulent|SBU|B|D|E|S|10–15 cm|Small succulent for desks
+Echeveria|Echeveria elegans|🪴|Succulent|SU|S|D|M|S|10–20 cm|Rosette; needs strong light
+Christmas cactus|Schlumbergera truncata|🌸|Succulent, flowering|BSH|B|B|M|S|20–40 cm|Blooms in cool, short days
+Begonia|Begonia rex|🌺|Flowering|HSD|B|B|M|T|20–40 cm|Colourful foliage or flowers
+Croton|Codiaeum variegatum|🌿|Foliage|HU|S|B|M|T|0.6–1.5 m|Vivid leaves; needs bright light
+Peperomia|Peperomia obtusifolia|🌿|Foliage|SB|M|D|E|S|15–30 cm|Compact; stores water in leaves
+Hoya|Hoya carnosa|🌸|Climber|BHD|B|D|E|S|1–3 m trailing|Waxy leaves, fragrant flowers
+Bird's nest fern|Asplenium nidus|🌿|Fern|BHD|L|C|M|S|40–80 cm|Wavy fronds; likes humidity
+Syngonium|Syngonium podophyllum|🌿|Climber|SHBD|M|B|E|T|0.3–1 m|Arrow-shaped leaves
+Dracaena marginata|Dracaena marginata|🌿|Foliage|HSBD|M|D|E|T|1–2 m|Spiky, upright form
+Kalanchoe|Kalanchoe blossfeldiana|🌼|Succulent, flowering|SU|S|D|E|T|20–40 cm|Long-lasting flower clusters
+Lavender|Lavandula angustifolia|💜|Herb|U|S|D|M|M|30–60 cm|Fragrant; needs strong sun and dry soil
+Rosemary|Salvia rosmarinus|🌿|Herb|U|S|D|M|S|0.5–1 m|Culinary herb; dislikes wet roots
+Curry leaf|Murraya koenigii|🌿|Herb|U|S|B|E|S|2–4 m|Kitchen staple, easy in a large pot
+Lemongrass|Cymbopogon citratus|🌾|Herb|U|S|B|E|M|0.6–1.5 m|Used in tea and cooking
+Mint|Mentha spicata|🌿|Herb|UD|M|C|E|M|20–40 cm|Spreads fast; keep in its own pot
+Marigold|Tagetes erecta|🌼|Flowering|U|S|B|E|S|30–90 cm|Festival flower; easy from seed
+Rose|Rosa spp.|🌹|Flowering|U|S|B|H|S|0.5–1.5 m|Needs 5–6 hours of sun
+Ixora|Ixora coccinea|🌺|Flowering|U|S|B|M|S|0.6–1.5 m|Clustered red or orange blooms
+Adenium|Adenium obesum|🌸|Succulent, flowering|U|S|D|M|T|0.5–1 m|Desert rose with a thick base
+Coleus|Plectranthus scutellarioides|🌿|Foliage|DH|M|C|E|M|30–60 cm|Bright patterned leaves
+Geranium|Pelargonium x hortorum|🌸|Flowering|UD|S|B|E|T|30–60 cm|Colourful flowers, scented leaves
+Portulaca|Portulaca grandiflora|🌸|Succulent, flowering|U|S|D|E|S|10–20 cm|Flowers open in sun
+Gerbera|Gerbera jamesonii|🌼|Flowering|U|S|B|M|S|30–45 cm|Daisy-like blooms
+Crossandra|Crossandra infundibuliformis|🧡|Flowering|U|B|B|M|S|0.5–1 m|Orange flowers used in garlands
+Chinese money plant|Pilea peperomioides|🪙|Foliage|SHB|B|D|E|S|20–30 cm|Round coin-shaped leaves
+African spear|Dracaena angolensis|🪴|Succulent|BSH|M|D|E|T|0.5–1.5 m|Cylindrical snake plant
+Tradescantia|Tradescantia zebrina|🌿|Foliage|SDH|B|B|E|M|15–30 cm|Purple-striped trailing leaves
+Mammillaria cactus|Mammillaria spp.|🌵|Cactus|SU|S|D|E|S|5–15 cm|Small globe cactus
+Alocasia|Alocasia x amazonica|🌿|Foliage|HD|B|C|H|T|0.4–0.8 m|Dramatic arrow-shaped leaves
+String of hearts|Ceropegia woodii|💚|Succulent|BSH|B|D|M|S|1–2 m trailing|Delicate trailing hearts
+Schefflera|Schefflera arboricola|🌿|Foliage|HSBD|B|B|E|T|1–2 m|Glossy umbrella-like leaves
+Polka dot plant|Hypoestes phyllostachya|🌸|Foliage|SD|M|C|M|S|20–40 cm|Pink-dotted leaves
+Yucca|Yucca gigantea|🌿|Foliage|HU|B|D|E|T|1–2 m|Tough, spiky accent
+Bromeliad|Guzmania lingulata|🌺|Flowering|HBD|B|B|M|S|30–50 cm|Long-lasting colourful bract
+Neem|Azadirachta indica|🌳|Tree, Ayurvedic|-|S|F|E|U|15–20 m|Shade tree; leaves, twigs and oil used traditionally
+Amla|Phyllanthus emblica|🍏|Fruit tree, Ayurvedic|-|S|F|E|U|8–18 m|Vitamin-C rich fruit; central to Triphala
+Ashwagandha|Withania somnifera|🌿|Herb, Ayurvedic|-|S|F|E|U|0.5–1.5 m|Root used traditionally in Ayurveda
+Brahmi|Bacopa monnieri|🍀|Herb, Ayurvedic|-|B|C|E|U|10–20 cm creeping|Traditional herb; likes wet soil
+Giloy|Tinospora cordifolia|🌿|Climber, Ayurvedic|-|B|B|E|U|Climbs 3+ m|Vigorous vine used in traditional medicine
+Turmeric|Curcuma longa|🟡|Herb, Ayurvedic|-|B|B|E|U|0.6–1 m|Rhizome crop; spice and traditional use
+Ginger|Zingiber officinale|🫚|Herb, Ayurvedic|-|B|B|E|U|0.6–1 m|Rhizome crop; kitchen and traditional use
+Henna (Mehndi)|Lawsonia inermis|🌿|Shrub, Ayurvedic|-|S|F|E|U|2–6 m|Leaves used for hair and skin dye
+Shatavari|Asparagus racemosus|🌿|Climber, Ayurvedic|-|B|B|E|U|1–3 m|Thorny climber; root used traditionally
+Arjuna|Terminalia arjuna|🌳|Tree, Ayurvedic|-|S|F|E|U|20–25 m|Bark used traditionally for the heart
+Bael|Aegle marmelos|🌳|Fruit tree, Ayurvedic|-|S|F|E|U|8–15 m|Sacred tree; fruit used traditionally
+Vasaka (Adulsa)|Justicia adhatoda|🌿|Shrub, Ayurvedic|-|S|F|E|U|2–4 m|Leaves used traditionally for cough
+Kalmegh|Andrographis paniculata|🌿|Herb, Ayurvedic|-|S|B|E|U|0.3–1 m|Bitter herb of traditional medicine
+Ashoka|Saraca asoca|🌳|Tree, Ayurvedic|-|B|B|M|U|6–9 m|Sacred tree with orange flowers
+Sandalwood|Santalum album|🌳|Tree, Ayurvedic|-|S|B|H|U|4–9 m|Slow-growing; needs a host plant
+Peepal|Ficus religiosa|🌳|Tree, Ayurvedic|-|S|F|E|U|15–25 m|Sacred shade tree; needs space for roots
+Guava|Psidium guajava|🍐|Fruit tree|-|S|B|E|S|3–10 m|Hardy fruit tree
+Papaya|Carica papaya|🍈|Fruit tree|-|S|B|E|S|2–10 m|Fast fruiting; avoid waterlogging
+Lemon|Citrus limon|🍋|Fruit tree|-|S|B|M|S|3–6 m|Pot or ground; needs feeding
+Banana|Musa spp.|🍌|Fruit|-|S|C|E|S|2–8 m|Fast-growing heavy feeder
+Coconut|Cocos nucifera|🥥|Tree|-|S|B|E|S|15–25 m|Tropical and coastal palm
+Pomegranate|Punica granatum|🍎|Fruit tree|-|S|D|E|S|3–6 m|Drought-tolerant fruit shrub
+Marble Queen pothos|Epipremnum aureum 'Marble Queen'|🌿|Climber|BSHD|M|B|E|T|1–2 m trailing|Cream-variegated trailing vine
+Neon pothos|Epipremnum aureum 'Neon'|🌿|Climber|BSHD|M|B|E|T|1–2 m trailing|Bright lime-green leaves
+Philodendron Brasil|Philodendron hederaceum 'Brasil'|🌿|Climber|BSHD|M|B|E|T|1–2 m trailing|Yellow-green striped leaves
+Philodendron Birkin|Philodendron 'Birkin'|🌿|Foliage|HBS|B|B|M|T|40–80 cm|White-striped upright leaves
+Xanadu philodendron|Thaumatophyllum xanadu|🌿|Foliage|HB|B|B|E|T|0.6–1 m|Lobed, compact bush
+Red Chinese evergreen|Aglaonema 'Lipstick'|🌿|Foliage|BHSD|L|B|E|T|40–70 cm|Pink-red leaf margins
+Zebra plant|Aphelandra squarrosa|🌿|Flowering|HS|B|C|H|S|30–60 cm|Striped leaves, yellow bracts
+Nerve plant|Fittonia albivenis|🌿|Foliage|SBD|M|C|M|S|10–20 cm|Veined leaves; likes humidity
+Watermelon peperomia|Peperomia argyreia|🌿|Foliage|SB|M|D|E|S|15–25 cm|Watermelon-striped leaves
+Aluminum plant|Pilea cadierei|🌿|Foliage|SHD|M|C|E|S|20–30 cm|Silver-splashed leaves
+Monstera adansonii|Monstera adansonii|🌿|Climber|HBS|B|B|E|T|1–2 m|Holey leaves; climbs
+Mini monstera|Rhaphidophora tetrasperma|🌿|Climber|HBS|B|B|E|T|1–2 m|Compact climber, split leaves
+Corn plant|Dracaena fragrans|🌿|Foliage|HBS|L|D|E|T|1–2 m|Tolerates low light
+Song of India|Dracaena reflexa|🌿|Foliage|HSD|M|D|E|T|1–2 m|Yellow-edged leaves
+Weeping fig|Ficus benjamina|🌳|Foliage|H|B|B|M|T|1–3 m|Graceful; dislikes being moved
+Ficus ginseng|Ficus microcarpa|🌳|Foliage|HS|B|B|M|T|30–60 cm|Bonsai-like thick roots
+Umbrella tree|Schefflera actinophylla|🌳|Foliage|HU|B|B|E|T|1–3 m|Big glossy leaflets
+Ming aralia|Polyscias fruticosa|🌿|Foliage|HS|B|B|M|T|0.6–1.5 m|Fine lacy foliage
+Kentia palm|Howea forsteriana|🌴|Palm|H|M|B|M|S|1–2 m|Elegant, low-light palm
+Majesty palm|Ravenea rivularis|🌴|Palm|HU|B|C|H|S|1–2 m|Needs humidity and light
+Lady palm|Rhapis excelsa|🌴|Palm|HDB|M|B|E|S|1–2 m|Clumping fan palm
+Sago palm|Cycas revoluta|🌴|Palm|HU|B|D|M|T|0.5–1 m|Slow; all parts very toxic
+Fishtail palm|Caryota mitis|🌴|Palm|HD|B|B|M|T|1.5–3 m|Fish-tail leaflets
+Pygmy date palm|Phoenix roebelenii|🌴|Palm|HU|B|B|M|S|1–2 m|Feathery, sun-loving palm
+Tiger aloe|Gonialoe variegata|🪴|Succulent|SBU|B|D|E|S|10–20 cm|Banded small aloe
+Zebra haworthia|Haworthiopsis fasciata|🪴|Succulent|SBU|B|D|E|S|8–12 cm|White-striped rosette
+Burro's tail|Sedum morganianum|🪴|Succulent|SUH|B|D|M|S|30–60 cm trailing|Trailing plump leaves
+Hens and chicks|Sempervivum tectorum|🪴|Succulent|SU|S|D|E|S|5–10 cm|Hardy rosettes with offsets
+String of buttons|Crassula perforata|🪴|Succulent|SU|B|D|E|S|15–30 cm|Stacked tiny leaves
+Prickly pear|Opuntia ficus-indica|🌵|Cactus|U|S|D|E|M|0.5–2 m|Flat pads; edible fruit
+African milk tree|Euphorbia trigona|🌵|Succulent|HU|B|D|E|T|0.5–1.5 m|Upright; milky sap irritates
+Crown of thorns|Euphorbia milii|🌵|Succulent|U|S|D|E|T|0.3–1 m|Blooms most of the year
+Easter cactus|Hatiora gaertneri|🌸|Succulent|BSH|B|B|M|S|20–30 cm|Spring flowers
+Dendrobium orchid|Dendrobium nobile|🌸|Flowering|HU|B|B|M|S|30–60 cm|Clusters of flowers
+Cymbidium orchid|Cymbidium hybrids|🌸|Flowering|HU|B|B|M|S|40–90 cm|Long flower spikes
+Urn plant|Aechmea fasciata|🌺|Flowering|HBD|B|B|E|S|40–60 cm|Silver-banded rosette, pink bloom
+Air plant|Tillandsia ionantha|🌿|Foliage|SBHD|B|B|E|S|5–10 cm|No soil; soak weekly
+Venus flytrap|Dionaea muscipula|🌿|Foliage|U|S|C|H|S|10–15 cm|Carnivorous; needs rain water
+Cyclamen|Cyclamen persicum|🌸|Flowering|BS|B|C|H|T|15–25 cm|Cool-season blooms
+Gloxinia|Sinningia speciosa|🌸|Flowering|BS|B|C|M|S|15–25 cm|Velvety bell flowers
+Gardenia|Gardenia jasminoides|🌼|Flowering|HU|B|C|H|T|0.5–1.5 m|Very fragrant; fussy
+Sweetheart hoya|Hoya kerrii|💚|Succulent|BSH|B|D|E|S|0.3–1 m|Heart-shaped leaves
+Mistletoe cactus|Rhipsalis baccifera|🌿|Cactus|HDB|M|B|E|S|0.5–1 m trailing|Hanging; tolerates shade
+Maidenhair fern|Adiantum raddianum|🌿|Fern|BHD|M|C|H|S|20–40 cm|Delicate; hates drying out
+Staghorn fern|Platycerium bifurcatum|🌿|Fern|HD|B|B|M|S|40–90 cm|Mounted antler-like fronds
+Asparagus fern|Asparagus setaceus|🌿|Fern|HD|B|B|E|T|0.3–1 m|Feathery foliage
+Foxtail fern|Asparagus densiflorus 'Myers'|🌿|Foliage|HUD|B|B|E|T|0.5–1 m|Plume-like stems
+Spike moss|Selaginella kraussiana|🌿|Foliage|SD|M|C|M|S|5–15 cm|Moss-like groundcover
+English ivy|Hedera helix|🌿|Climber|HSD|M|B|E|T|1–3 m|Trailing; toxic to pets
+Purple heart|Tradescantia pallida|🌿|Foliage|UHD|B|B|E|M|20–30 cm|Purple trailing stems
+Moonshine snake plant|Dracaena trifasciata 'Moonshine'|🪴|Succulent|BHSD|L|D|E|T|40–60 cm|Silvery-green leaves
+ZZ Raven|Zamioculcas zamiifolia 'Raven'|🪴|Foliage|BHSD|L|D|E|T|40–70 cm|Near-black leaves
+Calathea orbifolia|Goeppertia orbifolia|🌿|Foliage|HB|M|C|H|S|40–60 cm|Big striped round leaves
+Rattlesnake plant|Goeppertia insignis|🌿|Foliage|SH|M|C|H|S|40–60 cm|Wavy-edged leaves
+Stromanthe triostar|Stromanthe sanguinea|🌿|Foliage|HB|M|C|H|S|0.4–0.8 m|Pink, green, cream leaves
+Polka dot begonia|Begonia maculata|🌿|Foliage|HSB|B|B|M|T|0.4–0.8 m|Silver-spotted leaves
+Caladium|Caladium bicolor|🌿|Foliage|HSD|B|C|M|T|30–50 cm|Heart leaves; monsoon colour
+Pink Princess philodendron|Philodendron erubescens|🌿|Climber|HS|B|B|M|T|0.5–1 m|Pink-splashed leaves
+String of pearls|Senecio rowleyanus|🪴|Succulent|BUH|B|D|M|T|30–60 cm trailing|Bead-like leaves
+Lipstick plant|Aeschynanthus radicans|🌺|Climber|HB|B|B|M|S|30–60 cm trailing|Red tubular flowers
+Clivia|Clivia miniata|🌺|Flowering|HD|M|D|M|T|40–60 cm|Orange flowers; shade-tolerant
+Amaryllis|Hippeastrum hybrids|🌺|Flowering|HB|B|B|M|T|40–60 cm|Giant trumpet blooms
+Chrysanthemum|Chrysanthemum morifolium|🌼|Flowering|U|S|B|M|S|30–90 cm|Autumn flowers; festival favourite|చామంతి~गुलदाउदी
+Dahlia|Dahlia pinnata|🌺|Flowering|U|S|B|M|S|0.5–1.2 m|Big showy blooms|డేలియా~डहलिया
+Zinnia|Zinnia elegans|🌼|Flowering|U|S|B|E|S|30–90 cm|Easy summer annual|జినియా~जिनिया
+Sunflower|Helianthus annuus|🌻|Flowering|-|S|B|E|S|1–2.5 m|Tall seed-bearing flower|పొద్దుతిరుగుడు~सूरजमुखी
+Canna lily|Canna indica|🌺|Flowering|-|S|C|E|S|1–2 m|Bold leaves, bright flowers
+Lantana|Lantana camara|🌼|Shrub|-|S|F|E|T|1–2 m|Hardy, butterflies; toxic berries
+Oleander|Nerium oleander|🌸|Shrub|-|S|F|E|T|2–4 m|Very toxic; hardy hedge|గన్నేరు~कनेर
+Frangipani|Plumeria rubra|🌸|Tree|-|S|F|E|M|3–6 m|Fragrant flowers|దేవ గన్నేరు~गुलाचीन
+Crape jasmine|Tabernaemontana divaricata|🌼|Shrub|-|B|B|E|M|1–2 m|White flowers; temple plant|నందివర్ధనం~चांदनी
+Gulmohar|Delonix regia|🌳|Tree|-|S|F|E|U|10–15 m|Flame-red flowering tree|గుల్మోహర్~गुलमोहर
+Golden shower tree|Cassia fistula|🌳|Tree|-|S|F|E|U|8–12 m|Yellow hanging flowers|రేల చెట్టు~अमलतास
+Yellow bells|Tecoma stans|🌼|Shrub|-|S|F|E|U|2–5 m|Yellow trumpet flowers
+Night jasmine|Cestrum nocturnum|🌼|Shrub|U|S|B|E|T|2–4 m|Scented at night|రాత్రి రాణి~रात की रानी
+Rangoon creeper|Combretum indicum|🌸|Climber|-|S|B|E|U|3–8 m|Colour-changing flowers
+Butterfly pea|Clitoria ternatea|💙|Climber, Ayurvedic|U|S|B|E|U|2–4 m|Blue flowers; tea and traditional use|శంఖు పువ్వు~अपराजिता
+Parijat|Nyctanthes arbor-tristis|🌼|Shrub, Ayurvedic|-|S|F|E|U|3–8 m|Night-flowering; traditional use|పారిజాతం~हरसिंगार
+Champak|Magnolia champaca|🌼|Tree|-|S|B|M|U|10–15 m|Strongly scented flowers|సంపెంగ~चंपा
+Bakul|Mimusops elengi|🌳|Tree, Ayurvedic|-|S|F|E|U|10–15 m|Scented flowers; shade tree|పొగడ~मौलसिरी
+Periwinkle|Catharanthus roseus|🌸|Herb, Ayurvedic|U|S|F|E|T|30–60 cm|Blooms all year; toxic|బిళ్ల గన్నేరు~सदाबहार
+Tuberose|Polianthes tuberosa|🌼|Flowering|U|S|B|E|U|0.6–1 m|Very fragrant flower stalks|రజనీగంధ~रजनीगंधा
+Lotus|Nelumbo nucifera|🪷|Aquatic|-|S|C|M|S|1–1.5 m|Water plant; sacred flower|తామర~कमल
+Water lily|Nymphaea spp.|🪷|Aquatic|-|S|C|M|S|20–30 cm|Floating leaves and flowers
+Sapota (Chikoo)|Manilkara zapota|🍈|Fruit tree|-|S|F|E|S|8–15 m|Sweet fruit; hardy|సపోటా~चीकू
+Custard apple|Annona squamosa|🍈|Fruit tree|-|S|F|E|S|3–6 m|Sweet pulpy fruit|సీతాఫలం~सीताफल
+Jackfruit|Artocarpus heterophyllus|🍈|Fruit tree|-|S|F|E|S|10–20 m|Giant fruit tree|పనస~कटहल
+Jamun|Syzygium cumini|🍇|Fruit tree, Ayurvedic|-|S|F|E|S|10–20 m|Purple fruit; seeds used traditionally|నేరేడు~जामुन
+Fig|Ficus carica|🍈|Fruit tree|U|S|B|E|M|2–5 m|Fruit; grows in large pots|అంజీర~अंजीर
+Tamarind|Tamarindus indica|🌳|Fruit tree|-|S|F|E|S|10–20 m|Sour pods; large shade tree|చింత~इमली
+Cashew|Anacardium occidentale|🌳|Fruit tree|-|S|F|E|T|6–12 m|Cashew nuts; sap irritates|జీడిమామిడి~काजू
+Pineapple|Ananas comosus|🍍|Fruit|U|S|D|E|S|0.6–1 m|Grows from the crown|అనాస~अनानास
+Dragon fruit|Hylocereus undatus|🐉|Fruit, Cactus|U|S|D|E|S|2–4 m climbing|Cactus fruit; needs support|డ్రాగన్ ఫ్రూట్~ड्रैगन फ्रूट
+Grapes|Vitis vinifera|🍇|Fruit, Climber|U|S|B|M|S|3–6 m|Needs trellis and pruning|ద్రాక్ష~अंगूर
+Orange|Citrus sinensis|🍊|Fruit tree|-|S|B|M|S|3–6 m|Sweet citrus|నారింజ~संतरा
+Sweet lime|Citrus limetta|🍋|Fruit tree|-|S|B|M|S|3–6 m|Mosambi; juicy fruit|బత్తాయి~मौसंबी
+Passion fruit|Passiflora edulis|🍈|Fruit, Climber|U|S|B|E|M|3–6 m|Fast vine; fragrant fruit
+Strawberry|Fragaria x ananassa|🍓|Fruit|U|S|C|M|S|15–25 cm|Cool season; hanging pots
+Banyan|Ficus benghalensis|🌳|Tree, Ayurvedic|-|S|F|E|U|20–30 m|Huge sacred shade tree; wide roots|మర్రి~बरगद
+Teak|Tectona grandis|🌳|Tree|-|S|F|E|S|20–30 m|Valued timber tree|టేకు~सागौन
+Indian beech|Millettia pinnata|🌳|Tree, Ayurvedic|-|S|F|E|U|10–15 m|Shade tree; seed oil used traditionally|కానుగ~करंज
+Harad|Terminalia chebula|🌳|Tree, Ayurvedic|-|S|F|E|U|20–25 m|Fruit used in Triphala|కరక్కాయ~हरड़
+Baheda|Terminalia bellirica|🌳|Tree, Ayurvedic|-|S|F|E|U|20–30 m|Fruit used in Triphala|తానికాయ~बहेड़ा
+Punarnava|Boerhavia diffusa|🌿|Herb, Ayurvedic|-|S|F|E|U|30–100 cm|Spreading rainy-season herb|తెల్ల గలిజేరు~पुनर्नवा
+Bhringraj|Eclipta prostrata|🌿|Herb, Ayurvedic|U|M|C|E|U|20–50 cm|Used traditionally for hair|గుంటగలగర~भृंगराज
+Indian borage|Coleus amboinicus|🌿|Herb, Ayurvedic|UD|M|D|E|M|30–50 cm|Aromatic leaves; traditional cough use|ఓమ ఆకు~अजवाइन पत्ता
+Sarpagandha|Rauvolfia serpentina|🌿|Shrub, Ayurvedic|-|B|B|M|T|0.5–1 m|Traditional herb; toxic if misused|సర్పగంధ~सर्पगंधा
+Gotu kola|Centella asiatica|🌿|Herb, Ayurvedic|UD|M|C|E|U|10–20 cm creeping|Likes moist soil|సరస్వతి ఆకు~मंडूकपर्णी
+Safed musli|Chlorophytum borivilianum|🌿|Herb, Ayurvedic|-|B|B|M|U|30–50 cm|Tuber used traditionally|తెల్ల ముసలి~सफेद मूसली
+Long pepper|Piper longum|🌿|Climber, Ayurvedic|-|B|B|M|U|1–3 m|Spice vine|పిప్పళ్ళు~पीपली
+Black pepper|Piper nigrum|🌿|Climber|-|B|B|M|U|3–6 m|Spice vine; needs support|మిరియాలు~काली मिर्च
+Betel leaf|Piper betle|🌿|Climber|-|B|B|M|U|2–4 m|Paan leaf vine|తమలపాకు~पान
+Cardamom|Elettaria cardamomum|🌿|Herb|-|M|C|H|U|2–4 m|Shade spice plant|యాలకులు~इलायची
+Vetiver|Chrysopogon zizanioides|🌾|Herb, Ayurvedic|-|S|F|E|U|1–2 m|Fragrant roots; erosion control|వట్టివేరు~खस
+Coriander|Coriandrum sativum|🌿|Herb|U|S|B|E|S|30–50 cm|Cool-season leaf herb|కొత్తిమీర~धनिया
+Fenugreek|Trigonella foenum-graecum|🌿|Herb|U|S|B|E|S|30–60 cm|Fast leafy greens|మెంతి~मेथी
+Tomato|Solanum lycopersicum|🍅|Vegetable|U|S|B|M|U|0.6–2 m|Needs 6+ hours of sun|టమాటా~टमाटर
+Chilli|Capsicum annuum|🌶️|Vegetable|U|S|B|E|U|0.5–1 m|Easy in pots|మిరప~मिर्च
+Brinjal|Solanum melongena|🍆|Vegetable|U|S|B|E|U|0.6–1 m|Fruits in warm weather|వంకాయ~बैंगन
+Okra|Abelmoschus esculentus|🌿|Vegetable|U|S|B|E|U|1–1.5 m|Quick summer crop|బెండ~भिंडी
+Spinach|Spinacia oleracea|🥬|Vegetable|U|S|B|E|S|15–30 cm|Cool-season leaves|పాలకూర~पालक
+Gongura|Hibiscus sabdariffa|🌿|Vegetable|U|S|B|E|S|1–2 m|Tangy leaves; Andhra favourite|గోంగూర~अंबाड़ी
+Amaranth|Amaranthus tricolor|🥬|Vegetable|U|S|B|E|S|0.5–1 m|Fast leafy greens|తోటకూర~चौलाई
+Bottle gourd|Lagenaria siceraria|🥒|Vegetable, Climber|-|S|B|E|S|3–6 m|Vigorous vine|సొరకాయ~लौकी
+Bitter gourd|Momordica charantia|🥒|Vegetable, Climber|-|S|B|E|U|2–4 m|Climber for a trellis|కాకరకాయ~करेला
+Cucumber|Cucumis sativus|🥒|Vegetable, Climber|-|S|B|E|S|1.5–3 m|Fast; needs support|దోసకాయ~खीरा
+Pumpkin|Cucurbita moschata|🎃|Vegetable|-|S|B|E|S|3–6 m vine|Spreading vine|గుమ్మడి~कद्दू
+Ridge gourd|Luffa acutangula|🥒|Vegetable, Climber|-|S|B|E|S|3–5 m|Trellis vine|బీరకాయ~तोरई`.split('\n');
+let nid=13;X.forEach(r=>{const a=r.split('|'),rm=a[4]=='-'?[]:[...a[4]].map(c=>RN[c]);P.push({...D,i:nid++,n:a[0],s:a[1],e:a[2],cat:a[3],env:rm.length?(a[4].includes('U')?'both':'in'):'out',rm,su:LT[a[5]],w:WT[a[6]],m:MT[a[7]],pet:PT[a[8]],h:a[9],use:a[10],t2:a[11]})});
+P[6].env=P[8].env='both';P[0].rm.push('Balcony (shaded)');['4','6','11'].forEach(k=>P[k].cat+=', Ayurvedic');
+const _ex=explore;explore=function(sub){
+if(sub=='indoor'){const rm=window.rm||'Bedroom',ks=rm=='Balcony'?['Balcony (sunny)','Balcony (shaded)']:[rm];
+const sec=k=>{const r=P.filter(p=>p.env!='out'&&p.rm.includes(k)); return`<h2>${k} <span class="s">(${r.length} plants)</span></h2><div class="g">${r.map(p=>`<div class="c"><div class="pic">${p.e}</div><h3>${p.n}</h3><p class="s"><i>${p.s}</i></p><p class="s">Height: ${p.h}</p><p class="s">Light: ${p.su}</p><p class="s">Water: ${p.w}</p><p class="s">Maintenance: ${p.m}</p><p class="s">Pets: ${p.pet}</p><p>${p.use}</p>${acts(p)}</div>`).join('')}</div>`};
+return`<section class="sec"><h1>Indoor Plants</h1><div class="bar">${ROOMS.map(x=>`<button class="b ${x==rm?'':'o'}" onclick="window.rm='${x}';route()">${x}</button>`).join('')}</div>${ks.map(sec).join('')}</section>`}
+const h=_ex(sub);return sub=='outdoor'?h.replace('<div class="bar">','<p class="note">Traditional uses are for information only, not medical advice. Ask a qualified practitioner before use.</p><div class="bar">'):h};
+const KEYS=["Home","Explore Plants","Search Plants","Nursery Investment Guide","Plant Comparison","Growing Guides","About Us","Discover Plants. Grow Opportunities.","Explore Investment Guide","View Details","Compare","Remove","Indoor Plants","Outdoor Plants","Bedroom","Hall / Living Room","Balcony","Study Room","Popular plants","Find a plant","Read guide","☆ Save to Favorites"];
+const TX={te:["హోమ్","మొక్కలను అన్వేషించండి","మొక్కల శోధన","నర్సరీ పెట్టుబడి గైడ్","మొక్కల పోలిక","పెంపక గైడ్‌లు","మా గురించి","మొక్కలను కనుగొనండి. అవకాశాలను పెంచుకోండి.","పెట్టుబడి గైడ్ చూడండి","వివరాలు చూడండి","పోల్చండి","తొలగించు","ఇండోర్ మొక్కలు","అవుట్‌డోర్ మొక్కలు","పడకగది","హాల్ / లివింగ్ రూమ్","బాల్కనీ","స్టడీ రూమ్","ప్రసిద్ధ మొక్కలు","మొక్కను వెతకండి","గైడ్ చదవండి","☆ ఇష్టమైన వాటిలో సేవ్ చేయండి"],hi:["होम","पौधे देखें","पौधे ढूँढें","नर्सरी निवेश गाइड","पौधों की तुलना","उगाने की गाइड","हमारे बारे में","पौधे खोजें। अवसर उगाएँ।","निवेश गाइड देखें","विवरण देखें","तुलना करें","हटाएँ","इनडोर पौधे","आउटडोर पौधे","शयनकक्ष","हॉल / लिविंग रूम","बालकनी","स्टडी रूम","लोकप्रिय पौधे","पौधा खोजें","गाइड पढ़ें","☆ पसंदीदा में सहेजें"]};
+function applyLang(){const l=$('#lang').value;try{localStorage.setItem('pw-lang',l)}catch(e){}document.documentElement.lang=l;const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),ns=[];let x;while(x=w.nextNode())ns.push(x);ns.forEach(nd=>{const p=nd.parentNode;if(!p||/^(OPTION|SCRIPT|STYLE|I)$/.test(p.tagName))return;if(nd.o==null)nd.o=nd.nodeValue;const t=nd.o.trim(),i=KEYS.indexOf(t),m=t.match(/^([^A-Za-z]*)(.*)$/),pn=NM[m[2]];let v=nd.o;if(l!='en'){if(i>=0)v=nd.o.replace(t,TX[l][i]);else if(pn)v=nd.o.replace(m[2],pn[l=='te'?0:1])}nd.nodeValue=v})}
+try{$('#lang').value=localStorage.getItem('pw-lang')||'en'}catch(e){}
+const LN=["స్నేక్ ప్లాంట్|स्नेक प्लांट","మనీ ప్లాంట్|मनी प्लांट","పీస్ లిలీ|पीस लिली","అరెకా పామ్|एरेका पाम","కలబంద|ग्वारपाठा","మందార|गुड़हल","తులసి|तुलसी","మామిడి|आम","మల్లె|मोगरा","బోగన్ విల్లా|बोगनविलिया","స్పైడర్ ప్లాంట్|स्पाइडर प्लांट","మునగ|सहजन","జెడ్‌జెడ్ ప్లాంట్|जेडजेड प्लांट","బోస్టన్ ఫెర్న్|बोस्टन फर्न","రబ్బరు మొక్క|रबर प्लांट","చైనీస్ ఎవర్‌గ్రీన్|चाइनीज़ एवरग्रीन","పార్లర్ పామ్|पार्लर पाम","కాస్ట్ ఐరన్ ప్లాంట్|कास्ट आयरन प्लांट","ఫిలోడెండ్రాన్|फिलोडेंड्रॉन","బాంబూ పామ్|बैम्बू पाम","కలథియా|कैलाथिया","ప్రేయర్ ప్లాంట్|प्रेयर प्लांट","ఆర్కిడ్|ऑर्किड","ఆంథూరియం|एंथूरियम","జేడ్ ప్లాంట్|जेड प्लांट","ఆఫ్రికన్ వయొలెట్|अफ्रीकन वायलेट","లక్కీ బాంబూ|लकी बैम्बू","డీఫెన్‌బేకియా|डिफेनबेकिया","మాన్‌స్టెరా|मॉन्स्टेरा","ఫిడిల్ లీఫ్ ఫిగ్|फिडल लीफ फिग","పోనీటెయిల్ పామ్|पोनीटेल पाम","హావోర్తియా|हॉवर्थिया","ఎచెవేరియా|एचेवेरिया","క్రిస్మస్ కాక్టస్|क्रिसमस कैक्टस","బెగోనియా|बेगोनिया","క్రోటన్|क्रोटन","పెపెరోమియా|पेपेरोमिया","హోయా|होया","బర్డ్స్ నెస్ట్ ఫెర్న్|बर्ड्स नेस्ट फर्न","సింగోనియం|सिंगोनियम","డ్రసీనా|ड्रेसीना","కలంచో|कलांचो","లావెండర్|लैवेंडर","రోజ్‌మేరీ|रोज़मेरी","కరివేపాకు|करी पत्ता","నిమ్మగడ్డి|लेमन ग्रास","పుదీనా|पुदीना","బంతి పువ్వు|गेंदा","గులాబీ|गुलाब","ఇక్సోరా|इक्सोरा","అడీనియం|एडेनियम","కోలియస్|कोलियस","జెరేనియం|जेरेनियम","పోర్చులాకా|पोर्चुलाका","జెర్బెరా|जरबेरा","కనకాంబరం|अबोली","చైనీస్ మనీ ప్లాంట్|चाइनीज़ मनी प्लांट","ఆఫ్రికన్ స్పియర్|अफ्रीकन स्पीयर","ట్రేడెస్కాంటియా|ट्रेडेस्कैंटिया","మామిల్లేరియా కాక్టస్|मैमिलेरिया कैक्टस","అలోకేసియా|एलोकेसिया","స్ట్రింగ్ ఆఫ్ హార్ట్స్|स्ट्रिंग ऑफ हार्ट्स","షెఫ్లెరా|शेफलेरा","పోల్కా డాట్ ప్లాంట్|पोल्का डॉट प्लांट","యుక్కా|युक्का","బ్రోమీలియాడ్|ब्रोमेलियाड","వేప చెట్టు|नीम","ఉసిరి|आंवला","అశ్వగంధ|अश्वगंधा","బ్రహ్మి|ब्राह्मी","తిప్పతీగ|गिलोय","పసుపు|हल्दी","అల్లం|अदरक","గోరింటాకు|मेहंदी","పిల్లిపీచర|शतावरी","తెల్ల మద్ది|अर्जुन","మారేడు|बेल","అడ్డసరం|अडूसा","నేలవేము|कालमेघ","అశోక|अशोक","చందనం|चंदन","రావి చెట్టు|पीपल","జామ|अमरूद","బొప్పాయి|पपीता","నిమ్మ|नींबू","అరటి|केला","కొబ్బరి|नारियल","దానిమ్మ|अनार"];
+P.forEach((p,k)=>{const a=(p.t2||LN[k]||'|').split(/[|~]/);p.te=a[0];p.hi=a[1]||'';p.l=a[0]+' '+(a[1]||'')});
+const NM={};P.forEach(p=>{if(p.te)NM[p.n]=[p.te,p.hi]});
+const EXT=[],ALLP=()=>P.concat(EXT),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),WC=new Map(),IC=new Map();
+tc=function(i){i=/^\d+$/.test(i)?+i:i;cmp.has(i)?cmp.delete(i):cmp.add(i);route()};
+async function ws(q){if(WC.has(q))return WC.get(q);try{const r=await fetch('https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(q+' plant')+'&gsrlimit=6&prop=pageimages|extracts&piprop=thumbnail&pithumbsize=400&exintro=1&explaintext=1&exsentences=2&format=json&origin=*');const j=await r.json();const a=Object.values((j.query||{}).pages||{}).sort((x,y)=>x.index-y.index).map(p=>({t:p.title,x:p.extract||'',u:p.thumbnail&&p.thumbnail.source}));WC.set(q,a);return a}catch(e){return null}}
+async function gi(t){if(IC.has(t))return IC.get(t);let u=null;try{u=JSON.parse(localStorage.getItem('pw-img')||'{}')[t]||null}catch(e){}if(u){IC.set(t,u);return u}const nm=t.replace(/ x /,' × ').replace(/ spp\.$/,'').replace(/ '[^']*'/g,'');try{const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(nm));if(r.ok){const j=await r.json();u=(j.thumbnail&&j.thumbnail.source)||null}}catch(e){}
+if(!u)try{const r=await fetch('https://api.inaturalist.org/v1/taxa?per_page=1&q='+encodeURIComponent(nm));const j=await r.json(),k=j.results&&j.results[0];u=(k&&k.default_photo&&k.default_photo.medium_url)||null}catch(e){}
+IC.set(t,u);if(u)try{const m=JSON.parse(localStorage.getItem('pw-img')||'{}');m[t]=u;localStorage.setItem('pw-img',JSON.stringify(m))}catch(e){}return u}
+const idb=()=>new Promise((ok,no)=>{try{const r=indexedDB.open('pw-img',1);r.onupgradeneeded=()=>r.result.createObjectStore('i');r.onsuccess=()=>ok(r.result);r.onerror=()=>no()}catch(e){no()}});
+async function cacheImg(u){try{const d=await idb(),q=k=>new Promise(ok=>{const g=d.transaction('i').objectStore('i').get(k);g.onsuccess=()=>ok(g.result);g.onerror=()=>ok(null)}),c=await q(u);if(c)return URL.createObjectURL(c);if(navigator.onLine){const r=await fetch(u);if(r.ok){const bl=await r.blob();d.transaction('i','readwrite').objectStore('i').put(bl,u);return URL.createObjectURL(bl)}}}catch(e){}return u}
+async function load(el){const c=el.closest('.c'),a=c&&c.querySelector('a[href^="#/plant/"]'),id=a?a.getAttribute('href').slice(8):(location.hash.startsWith('#/plant/')?location.hash.slice(8):null),p=P.find(x=>x.i==id);if(!p)return;const u=await gi(p.s)||await gi(p.n);if(u){const src=await cacheImg(u);if(!el.isConnected)return;el.style.overflow='hidden';el.innerHTML=`<img src="${esc(src)}" alt="${esc(p.n)}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent='${p.e}'">`}}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);load(e.target)}}),{rootMargin:'300px'});
+function photos(){document.querySelectorAll('.pic').forEach(el=>io.observe(el))}
+function toExt(r){const U='Data not available';return{...D,i:'w'+encodeURIComponent(r.t).replace(/'/g,'%27'),n:r.t,s:U,e:'🌱',env:'na',cat:U,su:U,w:U,m:U,pet:U,h:U,rm:[],use:r.x.slice(0,160)||U,l:''}}
+async function resolve(q){const k=q.trim().toLowerCase();let p=P.find(x=>[x.n,x.s,x.te,x.hi].some(s=>s&&s.toLowerCase()==k))||P.find(x=>(x.n+' '+x.s+' '+x.l).toLowerCase().includes(k));if(p)return p;const a=await ws(k);if(!a||!a.length)return null;let e=EXT.find(x=>x.n==a[0].t);if(!e){e=toExt(a[0]);EXT.push(e)}return e}
+async function addCmp(){const v=[$('#c1').value,$('#c2').value].filter(s=>s.trim()),st=$('#cs');window.cv=v;if(v.length<2){st.textContent='Enter two plant names.';return}st.textContent='Looking up plants…';const r=await Promise.all(v.map(resolve));if(r.some(x=>!x)){st.textContent='Could not find one of those plants. Check the spelling, or your internet connection for plants outside our list.';return}cmp.clear();r.forEach(p=>cmp.add(p.i));route()}
+function compPage(){const v=window.cv||[];app.innerHTML=`<section class="sec"><h1>Plant Comparison</h1><p>Type any two plants, in English, Telugu or Hindi. Plants outside our list use limited details from Wikipedia.</p><form class="bar" onsubmit="event.preventDefault();addCmp()"><input id="c1" list="dl2" aria-label="First plant" placeholder="First plant, e.g. neem" value="${esc(v[0]||'')}"><input id="c2" list="dl2" aria-label="Second plant" placeholder="Second plant, e.g. rose" value="${esc(v[1]||'')}"><datalist id="dl2">${P.map(p=>`<option value="${p.n}">`).join('')}</datalist><button class="b">Compare</button><button type="button" class="b o" onclick="cmp.clear();window.cv=[];route()">Clear</button></form><p id="cs" class="s" role="status"></p>${cmpTable(false)}</section>`}
+async function webPage(t){app.innerHTML='<section class="sec"><p>Loading…</p></section>';let j=null;try{const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(t));if(r.ok)j=await r.json()}catch(e){}
+if(!j){app.innerHTML=`<section class="sec"><a href="#/search">← Back to search</a><h1>${esc(t)}</h1><p class="note">Could not load details. This needs an internet connection and the page opened outside the Claude preview.</p></section>`;return}
+let e=EXT.find(x=>x.n==j.title);if(!e){e=toExt({t:j.title,x:j.extract||''});EXT.push(e)}
+app.innerHTML=`<section class="sec"><a href="javascript:history.back()">← Back</a><div class="g g2" style="margin-top:12px"><div>${j.thumbnail?`<img src="${esc(j.thumbnail.source)}" alt="${esc(j.title)}" style="width:100%;max-height:340px;object-fit:cover;border-radius:18px">`:'<div class="pic" style="height:220px;font-size:7rem">🌱</div>'}<p class="s">Photo: Wikipedia / Wikimedia Commons (licence varies).</p></div><div><h1>${esc(j.title)}</h1><p>${esc(j.extract||'')}</p><p class="note">This plant is not in the portal's curated list. Description and photo come from Wikipedia. Care and market details: Data not available.</p><p><a class="b" href="${esc((j.content_urls&&j.content_urls.desktop.page)||'#')}" target="_blank" rel="noopener">Read more on Wikipedia</a> <button class="b o" onclick="tc('${e.i}')">${cmp.has(e.i)?'Remove from compare':'Compare Plant'}</button></p></div></div></section>`;applyLang()}
+let wt;function webSearch(){clearTimeout(wt);const el=$('#webres'),q=F.q.trim();if(!el)return;if(q.length<2){el.innerHTML='';return}el.innerHTML='<p class="s">Searching Wikipedia for more plants…</p>';wt=setTimeout(async()=>{const a=await ws(q),e=$('#webres');if(!e||F.q.trim()!=q)return;if(!a){e.innerHTML='<p class="note">Web lookup unavailable. It needs an internet connection and the page opened outside the Claude preview.</p>';return}
+e.innerHTML=a.length?`<h2>More results for “${esc(q)}” from Wikipedia</h2><p class="s">Check these are the plant you meant. Care details are not available for them.</p><div class="g">${a.map(r=>{const x=toExt(r);if(!EXT.some(y=>y.i==x.i))EXT.push(x);return`<div class="c">${r.u?`<img src="${esc(r.u)}" alt="${esc(r.t)}" style="width:100%;height:150px;object-fit:cover;border-radius:12px;margin-bottom:10px" loading="lazy">`:'<div class="pic">🌱</div>'}<h3>${esc(r.t)}</h3><p class="s">${esc(r.x.slice(0,180))}</p><a class="b" href="#/web/${encodeURIComponent(r.t)}">View Details</a> <button class="b o" onclick="tc('${x.i}')">Compare</button></div>`}).join('')}</div>`:'<p class="note">No matches found online either. Try another spelling.</p>';applyLang()},450)}
+const Q={env:'',sun:'',care:'',pet:''};
+const rq=()=>{quizPage();applyLang();photos()};
+function quizPage(){const sel=(k,l,a)=>`<label>${l} <select onchange="Q.${k}=this.value;rq()">${['',...a].map(x=>`<option value="${x}" ${Q[k]==x?'selected':''}>${x||'Choose…'}</option>`).join('')}</select></label>`;
+const lt={Low:['Low'],Medium:['Low','Medium'],Bright:['Bright','Medium'],'Full sun':['Full sun']},any=Object.values(Q).some(v=>v);
+const r=any?P.filter(p=>(!Q.env||(Q.env=='Indoor'?p.env!='out':p.env!='in'))&&(!Q.sun||lt[Q.sun].some(k=>p.su.includes(k)))&&(!Q.care||(Q.care=='Low'?p.m=='Easy':Q.care=='Medium'?p.m!='Demanding':true))&&(Q.pet!='Yes'||/non-toxic/i.test(p.pet))).sort((a,b)=>(a.m=='Easy'?0:1)-(b.m=='Easy'?0:1)):[];
+app.innerHTML=`<section class="sec"><h1>Find My Plant</h1><p>Choose any answers below. Plants appear only after you pick at least one.</p><div class="bar">${sel('env','Where?',['Indoor','Outdoor'])}${sel('sun','Sunlight',['Low','Medium','Bright','Full sun'])}${sel('care','Time for care',['Low','Medium','High'])}${sel('pet','Pets at home?',['No','Yes'])}</div>${Q.pet=='Yes'?'<p class="note">With pets, only plants listed as non-toxic are shown. Plants with unknown safety are left out.</p>':''}${any?`<h2>${r.length} match${r.length==1?'':'es'}</h2><div class="g">${r.slice(0,60).map(card).join('')||'<div class="c">No plants match these answers. Try changing one.</div>'}</div>${r.length>60?'<p class="s">Showing the first 60. Add more answers to narrow down.</p>':''}`:''}</section>`}
+const CV={n:100,cost:0,pot:0,soil:0,lab:0,wat:0,oth:0,price:0,loss:10},R=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+function calcOut(){const v=CV,inv=v.n*(v.cost+v.pot)+v.soil+v.lab+v.wat+v.oth,sold=v.n*(1-v.loss/100),rev=sold*v.price,net=rev-inv,be=v.price>0?Math.ceil(inv/v.price):null,bep=sold>0?inv/sold:null;
+$('#co').innerHTML=`<h2>Estimated results</h2><p>Total investment: <b>${R(inv)}</b></p><p>Plants sold after losses: <b>${Math.round(sold)}</b></p><p>Estimated revenue: <b>${R(rev)}</b></p><p>Estimated net profit: <b>${R(net)}</b>${net<0?' (a loss)':''}</p><p>Break-even quantity: <b>${be==null?'Enter a selling price':be+' plants'}</b></p><p>Break-even price per sold plant: <b>${bep==null?'n/a':R(bep)}</b></p><p class="s">Break-even quantity is how many plants you must sell at your price to recover the investment. If it is higher than the plants sold above, these numbers give a loss.</p>`}
+function calcPage(){const f=(k,l)=>`<label class="s" style="display:block">${l}<br><input type="number" min="0" step="any" value="${CV[k]}" oninput="CV.${k}=+this.value||0;calcOut()" style="width:100%"></label>`;
+app.innerHTML=`<section class="sec"><h1>Nursery Calculator</h1><p class="note">Enter your own estimates in rupees. Results are estimates from your numbers, not predictions, and no profit is guaranteed.</p><div class="g g2"><div class="c"><h2>Your numbers</h2>${f('n','Number of saplings')}${f('cost','Cost per sapling')}${f('pot','Pot cost per sapling')}${f('soil','Soil and potting mix, total')}${f('lab','Labour, total')}${f('wat','Water and electricity, total')}${f('oth','Other costs, total')}${f('price','Expected selling price per plant')}${f('loss','Unsold or damaged stock (%)')}</div><div class="c" id="co"></div></div></section>`;calcOut()}
+let my=[];try{my=JSON.parse(localStorage.getItem('pw-my')||'[]')}catch(e){}
+const td=()=>new Date().toISOString().slice(0,10),ad=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)};
+const wd=p=>{const w=p.w||'';return /2–3 weeks/.test(w)?17:/1–2 weeks/.test(w)?10:/Weekly/.test(w)?7:/2–3 days/.test(w)?3:/1–2 days/.test(w)?2:/moist/i.test(w)?4:/dry/.test(w)?5:7};
+const mr=()=>{try{localStorage.setItem('pw-my',JSON.stringify(my))}catch(e){}myPage();applyLang()};
+function addMy(){const p=P.find(x=>x.i==$('#mp').value);my.push({id:Date.now(),pid:p.i,nick:$('#mn').value.trim(),every:wd(p),last:td(),log:[]});mr()}
+function mw(id){my.find(m=>m.id==id).last=td();mr()}
+function mx(id){my=my.filter(m=>m.id!=id);mr()}
+function mg(id,f){my.find(m=>m.id==id).log.push({d:td(),h:+f[0].value,n:f[1].value.trim()});mr()}
+const myCard=m=>{const p=P.find(x=>x.i==m.pid),due=ad(m.last,m.every),d=Math.round((new Date(due)-new Date(td()))/864e5);return`<div class="c"><h3>${esc(m.nick||p.n)}</h3><p class="s">${p.n} · ${p.w}</p><p><b>${d<0?'Overdue by '+(-d)+' day(s)':d==0?'Water today':'Next watering in '+d+' day(s)'}</b><br><span class="s">Last watered ${m.last}; every ${m.every} days</span></p><button class="b" onclick="mw(${m.id})">Mark watered today</button> <button class="b o" onclick="mx(${m.id})">Remove</button><h3 style="margin-top:14px">Growth log</h3><form class="bar" onsubmit="event.preventDefault();mg(${m.id},this)"><input type="number" min="0" step="any" aria-label="Height in cm" placeholder="Height (cm)" required style="max-width:130px"><input aria-label="Note" placeholder="New leaves, notes"><button class="b o">Add</button></form>${m.log.slice(-5).reverse().map(l=>`<p class="s">${l.d}: ${l.h} cm ${esc(l.n||'')}</p>`).join('')||'<p class="s">No entries yet.</p>'}</div>`};
+function myPage(){const n=my.filter(m=>ad(m.last,m.every)<=td()).length;app.innerHTML=`<section class="sec"><h1>My Plants</h1><p class="note">Saved in this browser only. Watering gaps are typical for each plant; adjust them to your home.</p><form class="bar" onsubmit="event.preventDefault();addMy()"><select id="mp" aria-label="Choose plant">${P.map(p=>`<option value="${p.i}">${p.n}</option>`).join('')}</select><input id="mn" aria-label="Nickname" placeholder="Nickname (optional)"><button class="b">Add to My Plants</button></form>${my.length?`<p><b>${n} plant(s) need watering today or are overdue.</b></p><div class="g">${my.map(myCard).join('')}</div>`:'<div class="c">No plants yet. Add one above, then track watering and growth.</div>'}</section>`}
+const LOGO=s=>`<img src="${LOGOIMG}" alt="The best plant guider logo" width="${s}" height="${s}" style="flex:none;max-width:80vw;height:auto;border-radius:14px" onerror="this.replaceWith('🌿')">`;
+const fk=p=>'https://www.flipkart.com/search?q='+encodeURIComponent(p.n+' plant'),gg=p=>'https://www.google.com/search?q='+encodeURIComponent('buy '+p.n+' plant online');
+const acts=p=>`<div class="bar" style="margin:10px 0 0"><a class="b" href="#/plant/${p.i}">View Details</a><a class="b o" href="#/guides/${p.gd}">Growing Guide</a><a class="b" href="${fk(p)}" target="_blank" rel="noopener">Buy Now</a></div>`;
+function cost(i){const p=P.find(x=>x.i==i),el=$('#cost'+i);if(el.innerHTML){el.innerHTML='';return}el.innerHTML=`<div class="note" style="margin-top:8px"><b>Cost of ${p.n}:</b> Price data not available here. Prices change with plant size, seller and city, and we have no verified price list. Check today's price on <a href="${fk(p)}" target="_blank" rel="noopener">Flipkart</a> or <a href="${gg(p)}" target="_blank" rel="noopener">Google</a>.</div>`}
+const INTRO={explore:['Explore Plants','Browse outdoor plants (flowering, fruit trees, herbs, Ayurvedic) or indoor plants room by room. Each plant shows details, a growing guide, cost and where to buy.'],search:['Search Plants','Use this when you already know a plant name. Type it in English, Telugu or Hindi. If it is not in our list, we look it up online so you still get an answer.'],quiz:['Find My Plant','Use this when you do not know what to grow. Answer four questions (where, sunlight, care time, pets) and we suggest plants that suit your space.'],compare:['Plant Comparison','Type any two plants and see them side by side: size, light, water, care level and more.']};
+function topBar(h){const a=h.slice(2).split('/')[0],i=INTRO[a];$('#top').innerHTML=(a?'<button class="b o" onclick="history.back()">← Back</button>':'')+(navigator.onLine?'':'<p class="note">You are offline. Plant data still works, but photos and online search need internet.</p>')+(i?`<div class="note" style="margin-top:12px"><b>${i[0]}:</b> ${i[1]}</div>`:'')+((a=='search'||a=='quiz')?`<p style="margin:12px 0 0"><a class="b" href="https://www.google.com/maps/search/plant+nursery+near+me" target="_blank" rel="noopener">📍 Nearby nurseries</a> <span class="s">Opens Google Maps using your location.</span></p>`:'')}
+$('#nl').innerHTML=LOGO(64);document.querySelector('link[rel=icon]').href=LOGOIMG;
+{const sp=$('#splash'),go=()=>{sp.classList.add('h');setTimeout(()=>sp.remove(),700)};sp.innerHTML=`<div>${LOGO(160)}<h1 style="font-size:clamp(1.6rem,5vw,2.6rem);max-width:16em;margin:16px auto 6px;color:var(--fg)">Web-based Indoor and Outdoor Plant Selection and Information Portal</h1><p class="s">Discover plants. Grow opportunities.</p></div>`;sp.onclick=go;setTimeout(go,2200)}
+const _s=search;search=function(a){return _s(a).replace(/<\/section>$/,'<div id="webres" style="padding-top:10px"></div></section>')};
+$('#lang').onchange=applyLang;const _r=route;route=function(){const h=location.hash;_r();if(h=='#/compare')compPage();else if(h.startsWith('#/web/'))webPage(decodeURIComponent(h.slice(6)));else if(h=='#/quiz')quizPage();else if(h=='#/calc')calcPage();else if(h=='#/myplants')myPage();topBar(h);applyLang();photos();if(h.startsWith('#/search'))webSearch()};
+addEventListener('hashchange',route);addEventListener('online',route);addEventListener('offline',route);route();
+</script></body></html>
